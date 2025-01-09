@@ -15,9 +15,13 @@ jobs:
       - name: Install dependencies
         run: sh scripts/install.sh
       - name: Build packages
-        run: sh scripts/build.sh
+        run: |
+          sh scripts/build.sh
+          # Simplify the folder structure
+          mkdir -p dist/
+          tar -xvf libs/spandrel/dist/spandrel-0.4.0.tar.gz -C dist/ --strip-components=2
       - name: Upload compiled library as artifact
         uses: actions/upload-artifact@v3
         with:
           name: spandrel-dist
-          path: libs/spandrel/dist/
+          path: dist/
