@@ -1,5 +1,8 @@
 name: Release `spandrel`
 
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+
 jobs:
   save-compiled-library:
     runs-on: ubuntu-latest
