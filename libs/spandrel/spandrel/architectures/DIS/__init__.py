@@ -55,12 +55,19 @@ class DISArch(Architecture[DIS]):
             use_depthwise=use_depthwise,
         )
 
+        if num_blocks >= 12:
+            variant_tag = "Balanced"
+        elif num_blocks >= 8:
+            variant_tag = "Fast"
+        else:
+            variant_tag = "Tiny"
+
         return ImageModelDescriptor(
             model,
             state_dict,
             architecture=self,
             purpose="Restoration" if scale == 1 else "SR",
-            tags=[f"{num_features}nf", f"{num_blocks}nb"],
+            tags=[variant_tag, f"{num_features}nf", f"{num_blocks}nb"],
             supports_half=True,
             supports_bfloat16=True,
             scale=scale,
